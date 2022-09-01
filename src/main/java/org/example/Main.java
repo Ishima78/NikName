@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
+
 public class Main {
     public static AtomicInteger a3 = new AtomicInteger();
     public static AtomicInteger a4 = new AtomicInteger();
@@ -19,8 +20,13 @@ public class Main {
         Thread t4 = new Thread(() -> {
             for (String s : texts) {
                 if (s.length() == 4) {
-                    if (s.charAt(0) == s.charAt(3) && s.charAt(1) == s.charAt(2)
-                            && s.charAt(0) != s.charAt(1)) {
+                    if (s.equals(new StringBuilder(s).reverse().toString())) {
+                        a4.incrementAndGet();
+                    } else if (s.chars().allMatch(c -> c == s.charAt(0))) {
+                        a4.incrementAndGet();
+                    } else {
+                        char[] d = s.toCharArray();
+                        Arrays.sort(d);
                         a4.incrementAndGet();
                     }
                 }
@@ -29,19 +35,32 @@ public class Main {
         Thread t3 = new Thread(() -> {
             for (String s : texts) {
                 if (s.length() == 3) {
-                    if (s.charAt(0) == s.charAt(1) && s.charAt(1) == s.charAt(2)) {
+                    if (s.equals(new StringBuilder(s).reverse().toString())) {
+                        a3.incrementAndGet();
+                    } else if (s.chars().allMatch(c -> c == s.charAt(0))) {
+                        a3.incrementAndGet();
+                    } else {
+                        char[] d = s.toCharArray();
+                        Arrays.sort(d);
                         a3.incrementAndGet();
                     }
                 }
+
             }
         });
         Thread t5 = new Thread(() -> {
             for (String s : texts) {
                 if (s.length() == 5) {
-                    char[] d = s.toCharArray();
-                    Arrays.sort(d);
-                    //String f = new String(d);
-                    a5.incrementAndGet();
+                    if (s.equals(new StringBuilder(s).reverse().toString())) {
+                        a5.incrementAndGet();
+                    } else if (s.chars().allMatch(c -> c == s.charAt(0))) {
+                        a5.incrementAndGet();
+                    } else {
+                        char[] d = s.toCharArray();
+                        Arrays.sort(d);
+                        a5.incrementAndGet();
+
+                    }
                 }
             }
         });
